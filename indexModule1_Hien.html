@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+   <style>
+   *{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+   }
+   table{
+    margin:0 auto;
+    margin-top:50px;
+    width: 80%
+   }
+   tr,td{
+    margin: 150px
+   }
+   td{padding:5px;
+   text-align: center;}
+</style>
+<body>
+ <input id="input" type="text" placeholder="nhập tên student">
+<button onclick="createStudent()">Create</button>
+<input id="search" type="text" placeholder="search student">
+<button oninput="searchListStudent()">Search</button>
+<br>
+<table border=1px>
+    <thead>
+        <th>STT</th>
+        <th>Name</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </thead>
+    <tbody id="body">
+        <!-- <tr>
+            <td>1</td>
+            <td>Ngân</td>
+            <td><button>Edit</button></td>
+            <td><button>Delete</button></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Hoa</td>
+            <td><button>Edit</button></td>
+            <td><button>Delete</button></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Hồng</td>
+            <td><button>Edit</button></td>
+            <td><button>Delete</button></td>
+        </tr> -->
+    </tbody>
+</table>
+</body>
+<script>
+    let listUser=[];
+    createStudent();
+function createStudent(){
+    let user=document.getElementById('input').value;
+    listUser.push(user);
+renderListUsers()
+}
+function renderListUsers(){
+    let data='';
+    for(let i=0; i<listUser.length; i++){
+        let user=listUser[i];
+        data +=
+        `<tr>
+            <td>${i+1}</td>
+            <td>${user}</td>
+            <td><button onclick = editUser(${i})>Edit </button></td>
+            <td><button onclick = deleteUser(${i})>Delete</button></td>
+        </tr>
+        `
+    }
+    console.log(data);
+    document.getElementById('body').innerHTML=data; // lấy cái obj id body. 
+    
+}
+function deleteUser(id){
+    /* conssole.log('11111',id); */
+    listUser.splice(id,1);
+    renderListUsers();
+}
+function editUser(id11){
+    console.log('1111', id11);
+    let result=prompt('bạn muốn đổi thành tên thành tên mới', listUser[id11]);
+    /* listUser.splice(id11,1,result); */
+    listUser[id11]=result;
+    renderListUsers();
+}
+
+function  searchListStudent(){
+    //lấy giá trị người dùng nhập vào
+    let valueInput = document.getElementById('search').value;
+    console.log('valueInput', valueInput);
+    let listUsersSearch =[];
+    for (i=0; i<listUser.length; i++){
+        let user=listUser[i];
+        if(user.includes(valueInput)&& valueInput!=''){
+            /* console.log('có rồi') */// đây là để test xem có ăn ko 
+        listUsersSearch.push(user);
+        }
+    }
+    renderListUsers(listUsersSearch);
+}
+
+</script>
+</html>
